@@ -4,8 +4,9 @@ from settings import *
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, obstacle_sprites):
         super().__init__(groups)
-        self.image = pygame.image.load('C:/Users/mpeir/PycharmProjects/project/graphics/test/player.png').convert_alpha()
+        self.image = pygame.image.load('C:/Users/darre/PycharmProjects/pythonProject/graphics/test/player.png').convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
+        self.hitbox = self.rect.inflate(0, -26)
 
         self.direction = pygame.math.Vector2()
         self.speed = 5
@@ -24,10 +25,10 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_RIGHT]:
             self.direction.x = 1
-            self.image = pygame.image.load('C:/Users/mpeir/PycharmProjects/project/graphics/test/player.png').convert_alpha()
+            self.image = pygame.image.load('C:/Users/darre/PycharmProjects/pythonProject/graphics/test/player.png').convert_alpha()
         elif keys[pygame.K_LEFT]:
             self.direction.x = -1
-            self.image = pygame.image.load('C:/Users/mpeir/PycharmProjects/project/graphics/test/playerleft.png').convert_alpha()
+            self.image = pygame.image.load('C:/Users/darre/PycharmProjects/pythonProject/graphics/test/playerleft.png').convert_alpha()
         else:
             self.direction.x = 0
 
@@ -35,27 +36,28 @@ class Player(pygame.sprite.Sprite):
         if self.direction.magnitude() != 0:
             self.direction = self.direction.normalize()
 
-        self.rect.x += self.direction.x * speed
+        self.hitbox.x += self.direction.x * speed
         self.collision('horizontal')
-        self.rect.y += self.direction.y * speed
+        self.hitbox.y += self.direction.y * speed
         self.collision('vertical')
         #self.rect.center += self.direction * speed
+        self.rect.center = self.hitbox.center
 
     def collision(self, direction):
         if direction == 'horizontal':
             for sprite in self.obstacle_sprites:
-                if sprite.rect.colliderect(self.rect):
+                if sprite.hitbox.colliderect(self.hitbox):
                     if self.direction.x > 0:  # moving right
-                        self.rect.right = sprite.rect.left
+                        self.hitbox.right = sprite.hitbox.left
                     if self.direction.x < 0:  # moving left
-                        self.rect.left = sprite.rect.right
+                        self.hitbox.left = sprite.hitbox.right
         if direction == 'vertical':
             for sprite in self.obstacle_sprites:
-                if sprite.rect.colliderect(self.rect):
+                if sprite.hitbox.colliderect(self.hitbox):
                     if self.direction.y > 0:  # moving down
-                        self.rect.bottom = sprite.rect.top
+                        self.hitbox.bottom = sprite.hitbox.top
                     if self.direction.y < 0:  # moving up
-                        self.rect.top = sprite.rect.bottom
+                        self.hitbox.top = sprite.hitbox.bottom
     def update(self):
         self.input()
         self.move(self.speed)
