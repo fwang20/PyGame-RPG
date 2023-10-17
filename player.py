@@ -127,7 +127,8 @@ class Player(pygame.sprite.Sprite):
             self.frame_index = 0
 
         #set the image
-        self.image = animation[int(self.frame_index)]
+        curr_image = animation[int(self.frame_index)]
+        self.image = pygame.transform.scale(curr_image, (curr_image.get_width() * 2, curr_image.get_height() * 2))
         self.rect = self.image.get_rect(center = self.hitbox.center)
 
     def update(self):
