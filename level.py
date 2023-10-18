@@ -20,14 +20,14 @@ class Level:
 
     def create_map(self):
         layouts = {
-                'boundary': import_csv_layout('./graphics/map/floorblocks.csv'),
-                'grass': import_csv_layout('./graphics/map/grass.csv'),
-                'object': import_csv_layout('./graphics/map/objects.csv')
+                'boundary': import_csv_layout('C:/Users/darre/PycharmProjects/pythonProject/graphics/map/floorblocks.csv'),
+                'grass': import_csv_layout('C:/Users/darre/PycharmProjects/pythonProject/graphics/map/grass.csv'),
+                'object': import_csv_layout('C:/Users/darre/PycharmProjects/pythonProject/graphics/map/objects.csv')
         }
 
         graphics = {
-            'grass': import_folder('./graphics/Grass'),
-            'objects': import_folder('./graphics/Objects')
+            'grass': import_folder('C:/Users/darre/PycharmProjects/pythonProject/graphics/Grass'),
+            'objects': import_folder('C:/Users/darre/PycharmProjects/pythonProject/graphics/Objects')
         }
 
         for style, layout in layouts.items():
@@ -42,7 +42,8 @@ class Level:
                             random_grass_image = choice(graphics['grass'])
                             Tile((x,y), [self.visible_sprites, self.obstacle_sprites], 'grass', random_grass_image)
                         if style == 'object':
-                            pass
+                            surf = graphics['objects'][int(col)]
+                            Tile((x,y), [self.visible_sprites, self.obstacle_sprites], 'object', surf)
                     # if col == 'x':
                     #     Tile((x,y), [self.visible_sprites, self.obstacle_sprites])
                     # if col == 'p':
@@ -53,7 +54,6 @@ class Level:
         #update and draw the game
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        debug(self.player.status)
 
 class YSortCameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -66,7 +66,7 @@ class YSortCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         # creating the floor
-        self.floor_surf = pygame.image.load('./graphics/tilemap/ground.png').convert()
+        self.floor_surf = pygame.image.load('C:/Users/darre/PycharmProjects/pythonProject/graphics/tilemap/ground.png').convert()
         self.floor_rect = self.floor_surf.get_rect(topleft = (0,0))
 
     def custom_draw(self, player):
