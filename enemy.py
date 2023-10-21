@@ -7,13 +7,13 @@ class Enemy(Entity):
     def __init__(self, monster_name, pos, groups, obstacle_sprites):
 
         # general setup
-        super.__init__(groups)
+        super().__init__(groups)
         self.sprite_type = 'enemy'
 
         # graphics setup
         self.import_graphics(monster_name)
         self.status = 'idle'
-        self.image = self.animations[self.status][self.frame_index ]
+        self.image = self.animations[self.status][self.frame_index]
         self.rect =  self.image.get_rect(topleft = pos)
 
         # movement
@@ -22,7 +22,7 @@ class Enemy(Entity):
         self.obstacle_sprites = obstacle_sprites
 
         # stats
-        self.monster_name = monster_anme
+        self.monster_name = monster_name
         monster_info = monster_data[self.monster_name]
         self.health = monster_info['health']
         self.exp = monster_info['exp']

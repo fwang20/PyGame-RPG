@@ -20,6 +20,8 @@ class Level:
 
         # attack sprites
         self.current_attack = None
+        self.attack_sprites = pygame.sprite.Group()
+        self.attackable_sprites = pygame.sprite.Group()
 
         # sprite setup
         self.create_map()
@@ -54,7 +56,7 @@ class Level:
                             surf = graphics['objects'][int(col)]
                             Tile((x,y), [self.visible_sprites, self.obstacle_sprites], 'object', surf)
                         if style == 'entities':
-                            if col == '394':
+                            if col == '34':
                                 self.player = Player(
                                     (x,y),
                                     [self.visible_sprites],
@@ -63,15 +65,15 @@ class Level:
                                     self.destroy_attack,
                                     self.create_magic)
                             else:
-                                if col == '390':
-                                    monster_name = 'bamboo'
-                                elif col == '391':
-                                    monster_name = 'spirit'
-                                elif col == '392':
-                                    monster_name = 'raccoon'
+                                if col == '425':
+                                    monster_name = 'creature1'
+                                elif col == '439':
+                                    monster_name = 'creature2'
                                 else:
-                                    monster_name = 'squid'
-                                Enemy('monster', (x,y), [self.visible_sprites], self.obstacle_sprites)
+                                    monster_name = 'creature3'
+                                Enemy(monster_name, (x,y), [self.visible_sprites], self.obstacle_sprites)
+
+
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites])
 
@@ -120,6 +122,6 @@ class YSortCameraGroup(pygame.sprite.Group):
             self.display_surface.blit(sprite.image, offset_pos)
 
     def enemy_update(self, player):
-        enemy_sprites = [sprite for sprite in self.sprites() if hasattr() and sprite.sprite_type == 'enemy']
+        enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, 'sprite_type') and sprite.sprite_type == 'enemy']
         for enemy in enemy_sprites:
             enemy.enemy_update(player)
