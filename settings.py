@@ -33,10 +33,11 @@ weapon_data = {
 
 #magic
 magic_data = {
-    'flame': {'strength': 5, 'cost': 20, 'graphic': './graphics/particles/flame/fire.png'},
+    'flame': {'strength': 55, 'cost': 20, 'graphic': './graphics/particles/flame/fire.png'},
     'heal': {'strength': 20, 'cost': 10, 'graphic': './graphics/particles/heal/heal.png'}}
 #enemies
 monster_data = {
-    'creature1': {'health': 100, 'exp': 100, 'damage': 20, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
-    'creature2': {'health': 300, 'exp': 250, 'damage': 40, 'attack_type': 'claw', 'attack_sound': './audio/attack/claw.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
+    'creature1': {'health': 100, 'exp': 100, 'damage': 5, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 0.75, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
+    'creature2': {'health': 100, 'exp': 250, 'damage': 5, 'attack_type': 'claw', 'attack_sound': './audio/attack/claw.wav', 'speed': 0.85, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
+
 }

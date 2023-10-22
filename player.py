@@ -43,6 +43,12 @@ class Player(Entity):
         self.energy = self.stats['energy']
         self.exp = 123
         self.speed = self.stats['speed']
+
+        # damage timer
+        self.vulnerable = True
+        self.hurt_time = None
+        self.invulnerability_duration = 500
+
     def import_player_assets(self):
         character_path = './graphics/player/'
         self.animations = {'up':[],'down' :[],'left':[],'right':[],
@@ -109,6 +115,7 @@ class Player(Entity):
                     self.magic_index = 0
 
                 self.magic = list(magic_data.keys())[self.magic_index]
+
     def get_status(self):
 
         #idle status
@@ -129,6 +136,7 @@ class Player(Entity):
         else:
             if 'attack' in self.status:
                 self.status = self.status.replace('_attack', '')
+
     def move(self,speed):
         if self.direction.magnitude() != 0:
             self.direction = self.direction.normalize()
@@ -160,7 +168,7 @@ class Player(Entity):
         current_time = pygame.time.get_ticks()
 
         if self.attacking:
-            if current_time - self.attack_time > self.attack_cooldown:
+            if current_time - self.attack_time >= self.attack_cooldown + weapon_data[self.weapon]['cooldown']:
                 self.attacking = False
                 self.destroy_attack()
 
@@ -172,6 +180,10 @@ class Player(Entity):
             if current_time - self.magic_switch_time >= self.switch_duration_cooldown:
                 self.can_switch_magic = True
 
+        if not self.vulnerable:
+            if current_time - self.hurt_time >= self.invulnerability_duration:
+                self.vulnerable = True
+
     def animate(self):
         animation = self.animations[self.status]
 
@@ -182,13 +194,37 @@ class Player(Entity):
 
         #set the image
         curr_image = animation[int(self.frame_index)]
-        self.image = pygame.transform.scale(curr_image, (curr_image.get_width() * 1.6, curr_image.get_height() * 1.6))
+        self.image = pygame.transform.scale(curr_image, (curr_image.get_width() * 1.2, curr_image.get_height() * 1.2))
         self.rect = self.image.get_rect(center = self.hitbox.center)
 
+        #flicker
+        if not self.vulnerable:
+            alpha = self.wave_value()
+            self.image.set_alpha(alpha)
+        else:
+            self.image.set_alpha(255)
+
+
+    def get_full_weapon_damage(self):
+        base_damage = self.stats['attack']
+        weapon_damage = weapon_data[self.weapon]['damage']
+        return base_damage + weapon_damage
+
+    def get_full_magic_damage(self):
+        base_damage = self.stats['magic']
+        spell_damage = magic_data[self.magic]['strength']
+        return base_damage + spell_damage
+
+    def energy_recovery(self):
+        if self.energy < self.stats['energy']:
+            self.energy += 0.01 * self.stats['magic']
+        else:
+            self.energy = self.stats['energy']
     def update(self):
         self.input()
         self.cooldowns()
         self.get_status()
         self.animate()
         self.move(self.speed)
+        self.energy_recovery()
 
