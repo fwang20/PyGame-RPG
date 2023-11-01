@@ -27,17 +27,23 @@ weapon_data = {
     'sword': {'cooldown': 100, 'damage': 15, 'graphic': './graphics/weapons/sword/full.png'},
     'lance': {'cooldown': 400, 'damage': 30, 'graphic': './graphics/weapons/lance/full.png'},
     'axe': {'cooldown': 300, 'damage': 20, 'graphic': './graphics/weapons/axe/full.png'},
-    'rapier': {'cooldown': 50, 'damage': 8, 'graphic': './graphics/weapons/rapier/full.png'},
+    'rapier': {'cooldown': 50, 'damage': 8, 'graphic':  './graphics/weapons/rapier/full.png'},
     'sai': {'cooldown': 80, 'damage': 10, 'graphic': './graphics/weapons/sai/full.png'},
 }
 
 #magic
 magic_data = {
-    'flame': {'strength': 55, 'cost': 20, 'graphic': './graphics/particles/flame/fire.png'},
+    'flame': {'strength': 25, 'cost': 20, 'graphic': './graphics/particles/flame/fire.png'},
     'heal': {'strength': 20, 'cost': 10, 'graphic': './graphics/particles/heal/heal.png'}}
 #enemies
 monster_data = {
-    'creature1': {'health': 100, 'exp': 100, 'damage': 5, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 0.75, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
-    'creature2': {'health': 100, 'exp': 250, 'damage': 5, 'attack_type': 'claw', 'attack_sound': './audio/attack/claw.wav', 'speed': 0.85, 'resistance': 3, 'attack_radius': 80, 'notice_radius': 360},
-
+    'creature1': {'health': 100, 'exp': 100, 'damage': 12, 'attack_type': 'slash', 'attack_sound': './audio/attack/slash.wav', 'speed': 3, 'resistance': 3, 'attack_radius': 20, 'notice_radius': 360},
+    'creature2': {'health': 100, 'exp': 250, 'damage': 8, 'attack_type': 'claw', 'attack_sound': './audio/attack/claw.wav', 'speed': 2, 'resistance': 3, 'attack_radius': 20, 'notice_radius': 360},
+    'minotaur': {'health': 500, 'exp': 500, 'damage': 15, 'attack_type': 'slash', 'attack_sound': './audio/attack/fireball.wav', 'speed': 1, 'resistance': 1, 'attack_radius': 50, 'notice_radius': 400},
 }
+
+player_stats = {
+    'health': 100, 'energy': 60, 'attack': 10, 'magic': 4, 'speed': 2
+}
+
+player_exp = 0

@@ -17,21 +17,12 @@ class AnimationPlayer:
             # monster deaths
             'creature1': import_folder('./graphics/particles/smoke_orange'),
             'creature2': import_folder('./graphics/particles/nova'),
+            'minotaur': import_folder('./graphics/particles/nova'),
 
             # leafs
             'leaf': (
                 import_folder('./graphics/particles/leaf1'),
-                import_folder('./graphics/particles/leaf2'),
-                import_folder('./graphics/particles/leaf3'),
-                import_folder('./graphics/particles/leaf4'),
-                import_folder('./graphics/particles/leaf5'),
-                import_folder('./graphics/particles/leaf6'),
-                self.reflect_images(import_folder('./graphics/particles/leaf1')),
-                self.reflect_images(import_folder('./graphics/particles/leaf2')),
-                self.reflect_images(import_folder('./graphics/particles/leaf3')),
-                self.reflect_images(import_folder('./graphics/particles/leaf4')),
-                self.reflect_images(import_folder('./graphics/particles/leaf5')),
-                self.reflect_images(import_folder('./graphics/particles/leaf6'))
+                self.reflect_images(import_folder('./graphics/particles/leaf1'))
                 )
             }
 

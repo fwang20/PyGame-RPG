@@ -1,4 +1,6 @@
 import pygame
+
+import settings
 from settings import *
 from support import import_folder
 from entity import Entity
@@ -38,16 +40,19 @@ class Player(Entity):
 
 
         #stats
-        self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'magic': 4, 'speed': 5}
+        self.stats = {'health': 100, 'energy': 60, 'attack': 10, 'magic': 4, 'speed': 6}
         self.health = self.stats['health']
         self.energy = self.stats['energy']
-        self.exp = 123
+        self.exp = settings.player_exp
         self.speed = self.stats['speed']
 
         # damage timer
         self.vulnerable = True
         self.hurt_time = None
         self.invulnerability_duration = 500
+
+        self.weapon_attack_sound = pygame.mixer.Sound('./audio/sword.wav')
+        self.weapon_attack_sound.set_volume(0.01)
 
     def import_player_assets(self):
         character_path = './graphics/player/'
@@ -62,19 +67,19 @@ class Player(Entity):
         if not self.attacking:
             keys = pygame.key.get_pressed()
         #movement input
-            if keys[pygame.K_UP]:
+            if keys[pygame.K_w]:
                 self.direction.y = -1
                 self.status = 'up'
-            elif keys[pygame.K_DOWN]:
+            elif keys[pygame.K_s]:
                 self.direction.y = 1
                 self.status = 'down'
             else:
                 self.direction.y = 0
 
-            if keys[pygame.K_RIGHT]:
+            if keys[pygame.K_d]:
                 self.direction.x = 1
                 self.status = 'right'
-            elif keys[pygame.K_LEFT]:
+            elif keys[pygame.K_a]:
                 self.direction.x = -1
                 self.status = 'left'
             else:
@@ -85,6 +90,7 @@ class Player(Entity):
                 self.attacking = True
                 self.attack_time = pygame.time.get_ticks()
                 self.create_attack()
+                self.weapon_attack_sound.play()
 
         #magic input
             if keys[pygame.K_LCTRL]:
@@ -217,9 +223,13 @@ class Player(Entity):
 
     def energy_recovery(self):
         if self.energy < self.stats['energy']:
-            self.energy += 0.01 * self.stats['magic']
+            self.energy += 0.025 * self.stats['magic']
         else:
             self.energy = self.stats['energy']
+
+    def update_exp(self):
+        self.exp = settings.player_exp
+
     def update(self):
         self.input()
         self.cooldowns()
@@ -227,4 +237,8 @@ class Player(Entity):
         self.animate()
         self.move(self.speed)
         self.energy_recovery()
+        self.update_exp()
+
+
+
 
